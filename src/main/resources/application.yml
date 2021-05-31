@@ -1,0 +1,13 @@
+spring:
+    data:
+        mongodb:
+            database: babymeal_db
+            host: localhost
+            port: 27017
+
+server:
+    servlet:
+        context-path: /api/v0
+
+jwt:
+    secret: daubiutycahero

@@ -32,7 +32,7 @@ public class IngredientService {
 	public IngredientModel createIngredient(IngredientModel ingredientModel) {
 		Ingredient ingredient = new Ingredient();
 		ingredient.setId(UUID.randomUUID().toString());
-		ingredient.setNames(ModelMapperUtils.mapList(ingredientModel.getNames(), Translation.class));
+		ingredient.setName(ModelMapperUtils.mapList(ingredientModel.getName(), Translation.class));
 		return ModelMapperUtils.mapObject(repository.insert(ingredient), IngredientModel.class);
 	}
 
@@ -52,7 +52,7 @@ public class IngredientService {
 			throw new ObjectNotFoundException("ingredientId");
 		}
 		Ingredient ingredient = ingredientOptional.get();
-		ingredient.setNames(ModelMapperUtils.mapList(ingredientModel.getNames(), Translation.class));
+		ingredient.setName(ModelMapperUtils.mapList(ingredientModel.getName(), Translation.class));
 		return ModelMapperUtils.mapObject(repository.save(ingredient), IngredientModel.class);
 	}
 	

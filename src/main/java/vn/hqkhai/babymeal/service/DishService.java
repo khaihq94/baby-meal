@@ -32,7 +32,7 @@ public class DishService {
 	public DishModel createDish(DishModel dishModel) {
 		Dish dish = new Dish();
 		dish.setId(UUID.randomUUID().toString());
-		dish.setNames(ModelMapperUtils.mapList(dishModel.getNames(), Translation.class));
+		dish.setName(ModelMapperUtils.mapList(dishModel.getName(), Translation.class));
 		return ModelMapperUtils.mapObject(repository.insert(dish), DishModel.class);
 	}
 
@@ -52,7 +52,7 @@ public class DishService {
 			throw new ObjectNotFoundException("DishId");
 		}
 		Dish dish = dishOptional.get();
-		dish.setNames(ModelMapperUtils.mapList(dishModel.getNames(), Translation.class));
+		dish.setName(ModelMapperUtils.mapList(dishModel.getName(), Translation.class));
 		return ModelMapperUtils.mapObject(repository.save(dish), DishModel.class);
 	}
 	

@@ -32,7 +32,7 @@ public class AgeService {
 	public AgeModel createAge(AgeModel ageModel) {
 		Age age = new Age();
 		age.setId(UUID.randomUUID().toString());
-		age.setNames(ModelMapperUtils.mapList(ageModel.getNames(), Translation.class));
+		age.setName(ModelMapperUtils.mapList(ageModel.getName(), Translation.class));
 		return ModelMapperUtils.mapObject(repository.insert(age), AgeModel.class);
 	}
 
@@ -52,7 +52,7 @@ public class AgeService {
 			throw new ObjectNotFoundException("ageId");
 		}
 		Age age = ageOptional.get();
-		age.setNames(ModelMapperUtils.mapList(ageModel.getNames(), Translation.class));
+		age.setName(ModelMapperUtils.mapList(ageModel.getName(), Translation.class));
 		return ModelMapperUtils.mapObject(repository.save(age), AgeModel.class);
 	}
 

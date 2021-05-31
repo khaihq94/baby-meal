@@ -13,6 +13,6 @@ public class Ingredient {
 
 	@Id
 	private String id;
-	private List<Translation> names; 
+	private List<Translation> name; 
 	
 }

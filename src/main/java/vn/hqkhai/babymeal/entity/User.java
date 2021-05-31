@@ -1,18 +1,17 @@
 package vn.hqkhai.babymeal.entity;
 
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
 @Data
-@Document(collection = "age")
-public class Age {
+@Document(collection = "user")
+public class User {
 
 	@Id
 	private String id;
-	private List<Translation> name; 
-
+	private String username;
+	private String password;
+	
 }

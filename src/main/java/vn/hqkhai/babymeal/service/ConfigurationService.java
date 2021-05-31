@@ -23,7 +23,7 @@ public class ConfigurationService {
 		configurationResponse.setAges(ageService.getAllAges());
 		configurationResponse.setDishes(dishService.getAllDishes());
 		configurationResponse.setIngredients(ingredientService.getAllIngredients());
-		configurationResponse.setSupportedLangs(SupportedLanguages.getAllIds());
+		configurationResponse.setSupportedLanguages(SupportedLanguages.getAllIds());
 		return configurationResponse;
 	}
 

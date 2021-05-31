@@ -868,12 +868,12 @@ components:
       - dishId
       - mainImageId
       - preparationTime
-      - sources
+      - source
       properties:
         id:
           type: string
           example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
-        names:
+        name:
           type: array
           items:
             $ref: '#/components/schemas/TranslationModel'
@@ -907,11 +907,11 @@ components:
         videoUrl:
           type: string
           example: 'https://www.youtube.com/'
-        sources:
+        source:
           type: array
           items:
             $ref: '#/components/schemas/TranslationModel'
-        notes:
+        note:
           type: array
           items:
             $ref: '#/components/schemas/TranslationModel'
@@ -930,9 +930,13 @@ components:
     RecipeIngredientModel:
       type: object
       required:
+      - quantity
       - unitId
       - ingredientId
       properties:
+        quantity:
+          type: number
+          example: 0
         unitId:
           type: string
           example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
@@ -942,36 +946,36 @@ components:
     AgeModel:
       type: object
       required:
-      - names
+      - name
       properties:
         id:
           type: string
           example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
-        names:
+        name:
           type: array
           items:
             $ref: '#/components/schemas/TranslationModel'
     DishModel:
       type: object
       required:
-      - names
+      - name
       properties:
         id:
           type: string
           example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
-        names:
+        name:
           type: array
           items:
             $ref: '#/components/schemas/TranslationModel'
     IngredientModel:
       type: object
       required:
-      - names
+      - name
       properties:
         id:
           type: string
           example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
-        names:
+        name:
           type: array
           items:
             $ref: '#/components/schemas/TranslationModel'
@@ -993,19 +997,19 @@ components:
     UnitModel:
       type: object
       required:
-      - contents
+      - name
       properties:
         id:
           type: string
           example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
-        content:
+        name:
           type: array
           items:
             $ref: '#/components/schemas/UnitContentModel'
     ConfigurationModel:
       type: object
       properties:
-        supportedLangs:
+        supportedLanguages:
           type: array
           items:
             type: string
