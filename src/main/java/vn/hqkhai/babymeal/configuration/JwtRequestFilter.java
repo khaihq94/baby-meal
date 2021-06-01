@@ -31,11 +31,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtTokenUtils jwtTokenUtils;
 
-//	public JwtRequestFilter(JwtUserDetailsService jwtUserDetailsService, JwtTokenUtils jwtTokenUtils) {
-//		this.jwtTokenUtils = jwtTokenUtils;
-//		this.jwtUserDetailsService = jwtUserDetailsService;
-//	}
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -47,12 +42,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		// only the Token
 		if (StringUtils.isNotBlank(requestTokenHeader) && requestTokenHeader.startsWith(BEARER)) {
 			jwtToken = StringUtils.substringAfter(requestTokenHeader, BEARER);
-			try {
-				username = jwtTokenUtils.getUsernameFromToken(jwtToken);
-			} catch (IllegalArgumentException e) {
-				System.out.println("Unable to get JWT Token");
-			} catch (ExpiredJwtException e) {
-				System.out.println("JWT Token has expired");
+			if (StringUtils.isNotBlank(jwtToken)) {
+				try {
+					username = jwtTokenUtils.getUsernameFromToken(jwtToken);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Unable to get JWT Token");
+				} catch (ExpiredJwtException e) {
+					System.out.println("JWT Token has expired");
+				}
 			}
 		} else {
 			if (StringUtils.isBlank(requestTokenHeader)) {
