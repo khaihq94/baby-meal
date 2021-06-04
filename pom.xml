@@ -9,10 +9,10 @@
 		<version>2.4.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>vn.hqkhai.babymeal</groupId>
-	<artifactId>babymeal-service</artifactId>
+	<groupId>vn.hqkhai.urfuture</groupId>
+	<artifactId>urfuture-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>babymeal-service</name>
+	<name>urfuture-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -102,16 +102,16 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.1.0</version>
+				<version>4.3.1</version>
 				<executions>
 					<execution>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/babymeal-api-spec.yaml</inputSpec>
-							<apiPackage>vn.hqkhai.babymeal.openapi.api</apiPackage>
-							<modelPackage>vn.hqkhai.babymeal.openapi.model</modelPackage>
+							<inputSpec>${project.basedir}/src/main/resources/urfuture-api-spec.yaml</inputSpec>
+							<apiPackage>vn.hqkhai.urfuture.openapi.api</apiPackage>
+							<modelPackage>vn.hqkhai.urfuture.openapi.model</modelPackage>
 							<generatorName>spring</generatorName>
 							<library>spring-boot</library>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
@@ -125,10 +125,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>build-helper-maven-plugin</artifactId> 
-				<executions> <execution> <id>add-source</id> <phase>generate-sources</phase> 
-				<goals> <goal>add-source</goal> </goals> <configuration> <sources> <source>target/generated-sources/openapi</source> 
-				</sources> </configuration> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 

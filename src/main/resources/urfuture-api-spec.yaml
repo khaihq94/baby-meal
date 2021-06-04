@@ -1,0 +1,1027 @@
+openapi: 3.0.3
+info:
+  description: 'This is the api spec for UrFuture project.'
+  version: '1.0.0'
+  title: 'Swagger UrFuture'
+  contact:
+    email: 'babiqit@gmail.com'
+tags:
+- name: 'recipe'
+  description: 'Everything about your Pets'
+- name: 'configuration'
+  description: 'Get all searchable criterias'
+- name: 'ingredient'
+  description: 'Operations about ingredient'
+- name: 'age'
+  description: 'Operations about age'
+- name: 'dish'
+  description: 'Operations about dish'
+- name: 'image'
+  description: 'Operations about image'
+- name: 'unit'
+  description: 'Operations about unit'
+servers:
+  - url: /api/v0
+paths:
+  /recipes:
+    post:
+      tags:
+      - recipe
+      summary: 'Create a new recipe'
+      operationId: createRecipe
+      requestBody:
+        description: 'The prepared recipe request to be created.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeModel'
+      responses:
+        '201':
+          description: 'The recipe is created.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+    get:
+      tags:
+      - recipe
+      summary: 'Find all Recipes'
+      operationId: getAllRecipes
+      responses:
+        '200':
+          description: 'All recipes'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecipeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+  /recipes/{recipeId}:
+    get:
+      tags:
+      - recipe
+      summary: 'Finds Recipe by id'
+      operationId: findRecipeById
+      parameters:
+        - name: recipeId
+          in: path
+          description: 'ID of recipe to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The recipe identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      responses:
+        '200':
+          description: 'The profile'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+    put:
+      tags:
+      - recipe
+      summary: 'Update an existing recipe'
+      operationId: updateRecipe
+      parameters:
+        - name: recipeId
+          in: path
+          description: 'ID of recipe to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The recipe identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      requestBody:
+        description: 'The prepared recipe request to to be updated.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeModel'
+      responses:
+        '200':
+          description: 'The recipe is updated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+        '409':
+          description: 'Conflict: Indicates that the request could not be processed because of conflict in the current state of the resource.'
+    delete:
+      tags:
+        - recipe
+      summary: 'Delete all recipe by profile id'
+      parameters:
+        - name: recipeId
+          in: path
+          description: 'ID of recipe to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The recipe identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      operationId: deleteRecipe
+      responses:
+        '204':
+          description: 'The recipe has been sucessfully deleted.'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+  /configurationData:
+    get:
+      tags:
+      - configuration
+      summary: 'Get all configuration data'
+      operationId: getConfiguration
+      responses:
+        '200':
+          description: 'List of configuration data'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+  /ingredients:
+    post:
+      tags:
+      - ingredient
+      summary: 'Create a new ingredient'
+      operationId: createIngredient
+      requestBody:
+        description: 'The prepared ingredient request to be created.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientModel'
+      responses:
+        '201':
+          description: 'The ingredient is created.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+    get:
+      tags:
+      - ingredient
+      summary: 'Find all Ingredients'
+      operationId: getAllIngredients
+      responses:
+        '200':
+          description: 'All Ingredients'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IngredientModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+  /ingredients/{ingredientId}:
+    get:
+      tags:
+      - ingredient
+      summary: 'Finds ingredient by id'
+      operationId: findIngredientById
+      parameters:
+        - name: ingredientId
+          in: path
+          description: 'ID of ingredient to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The ingredient identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      responses:
+        '200':
+          description: 'The ingredient'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+    put:
+      tags:
+      - ingredient
+      summary: 'Update an existing Ingredient'
+      operationId: updateIngredient
+      parameters:
+        - name: ingredientId
+          in: path
+          description: 'ID of ingredient to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The ingredient identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      requestBody:
+        description: 'The prepared ingredient request to to be updated.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngredientModel'
+      responses:
+        '200':
+          description: 'The ingredient is updated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngredientModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+        '409':
+          description: 'Conflict: Indicates that the request could not be processed because of conflict in the current state of the resource.'
+    delete:
+      tags:
+        - ingredient
+      summary: 'Delete all ingredient by profile id'
+      parameters:
+        - name: ingredientId
+          in: path
+          description: 'ID of ingredient to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The ingredient identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      operationId: deleteIngredient
+      responses:
+        '204':
+          description: 'The ingredient has been sucessfully deleted.'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+  /ages:
+    post:
+      tags:
+      - age
+      summary: 'Create a new age'
+      operationId: createAge
+      requestBody:
+        description: 'The prepared age request to be created.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgeModel'
+      responses:
+        '201':
+          description: 'The age is created.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+    get:
+      tags:
+      - age
+      summary: 'Find all ages'
+      operationId: getAllAges
+      responses:
+        '200':
+          description: 'All ages'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+  /ages/{ageId}:
+    get:
+      tags:
+      - age
+      summary: 'Finds age by id'
+      operationId: findAgeById
+      parameters:
+        - name: ageId
+          in: path
+          description: 'ID of age to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The age identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      responses:
+        '200':
+          description: 'The age'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+    put:
+      tags:
+      - age
+      summary: 'Update an existing age'
+      operationId: updateAge
+      parameters:
+        - name: ageId
+          in: path
+          description: 'ID of age to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The age identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      requestBody:
+        description: 'The prepared age request to to be updated.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgeModel'
+      responses:
+        '200':
+          description: 'The age is updated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgeModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+        '409':
+          description: 'Conflict: Indicates that the request could not be processed because of conflict in the current state of the resource.'
+    delete:
+      tags:
+        - age
+      summary: 'Delete all age by profile id'
+      parameters:
+        - name: ageId
+          in: path
+          description: 'ID of age to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The age identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      operationId: deleteAge
+      responses:
+        '204':
+          description: 'The age has been sucessfully deleted.'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+  /dishes:
+    post:
+      tags:
+      - dish
+      summary: 'Create a new dish'
+      operationId: createDish
+      requestBody:
+        description: 'The prepared dish request to be created.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DishModel'
+      responses:
+        '201':
+          description: 'The dish is created.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DishModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+    get:
+      tags:
+      - dish
+      summary: 'Find all dishes'
+      operationId: getAllDishes
+      responses:
+        '200':
+          description: 'All dishes'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DishModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+  /dishes/{dishId}:
+    get:
+      tags:
+      - dish
+      summary: 'Finds dish by id'
+      operationId: findDishById
+      parameters:
+        - name: dishId
+          in: path
+          description: 'ID of dish to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The dish identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      responses:
+        '200':
+          description: 'The dish'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DishModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+    put:
+      tags:
+      - dish
+      summary: 'Update an existing dish'
+      operationId: updateDish
+      parameters:
+        - name: dishId
+          in: path
+          description: 'ID of dish to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The dish identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      requestBody:
+        description: 'The prepared age request to to be updated.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DishModel'
+      responses:
+        '200':
+          description: 'The dish is updated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DishModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+        '409':
+          description: 'Conflict: Indicates that the request could not be processed because of conflict in the current state of the resource.'
+    delete:
+      tags:
+        - dish
+      summary: 'Delete all dish by profile id'
+      parameters:
+        - name: dishId
+          in: path
+          description: 'ID of dish to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The dish identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      operationId: deleteDish
+      responses:
+        '204':
+          description: 'The dish has been sucessfully deleted.'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+  /units:
+    post:
+      tags:
+      - unit
+      summary: 'Create a new unit'
+      operationId: createUnit
+      requestBody:
+        description: 'The prepared ingredient request to be created.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnitModel'
+      responses:
+        '201':
+          description: 'The unit is created.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnitModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+    get:
+      tags:
+      - unit
+      summary: 'Find all units'
+      operationId: getAllUnits
+      responses:
+        '200':
+          description: 'All units'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UnitModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+  /units/{unitId}:
+    get:
+      tags:
+      - unit
+      summary: 'Finds unit by id'
+      operationId: findUnitById
+      parameters:
+        - name: unitId
+          in: path
+          description: 'ID of unit to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The unit identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      responses:
+        '200':
+          description: 'The unit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnitModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+    put:
+      tags:
+      - unit
+      summary: 'Update an existing unit'
+      operationId: updateUnit
+      parameters:
+        - name: unitId
+          in: path
+          description: 'ID of unit to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The unit identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      requestBody:
+        description: 'The prepared age request to to be updated.'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnitModel'
+      responses:
+        '200':
+          description: 'The unit is updated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnitModel'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+        '409':
+          description: 'Conflict: Indicates that the request could not be processed because of conflict in the current state of the resource.'
+    delete:
+      tags:
+        - unit
+      summary: 'Delete all unit by profile id'
+      parameters:
+        - name: unitId
+          in: path
+          description: 'ID of unit to return'
+          required: true
+          schema:
+            type: string
+            maxLength: 64
+            description: 'The unit identifier (UUID).'
+            example: '7f7acbad-8e3b-470f-a3d4-e750360e3964'
+      operationId: deleteUnit
+      responses:
+        '204':
+          description: 'The unit has been sucessfully deleted.'
+        '300':
+          description: 'Moved: The resource has moved.'
+        '400':
+          description: 'Bad Request: The request could not be understood by the server due to malformed syntax. Something like Domain validation errors, missing data, invalid input, etc.'
+        '401':
+          description: 'Unauthorized: The caller is not authorized.'
+        '403':
+          description: 'Forbidden: The caller has no permission.'
+        '404':
+          description: 'Not Found: The server has not found anything matching the Request-URI.'
+        '408':
+          description: 'Timeout: The request timeout.'
+components:
+  schemas:
+    RecipeModel:
+      type: object
+      required:
+      - name
+      - ageId
+      - recipeIngredients
+      - dishId
+      - mainImageId
+      - preparationTime
+      - source
+      properties:
+        id:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        name:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+        ageId:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        recipeIngredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeIngredientModel'
+        suggestionRecipesId:
+          type: array
+          items:
+            type: string
+            example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        dishId:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        mainImageId:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        imagesId:
+          type: array
+          items:
+            type: string
+            example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        preparationTime:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+        videoUrl:
+          type: string
+          example: 'https://www.youtube.com/'
+        source:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+        note:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+    TranslationModel:
+      type: object
+      required:
+      - content
+      - language
+      properties:
+        language:
+          type: string
+          example: 'vi'
+        content:
+          type: string
+          example: 'content in language'
+    RecipeIngredientModel:
+      type: object
+      required:
+      - quantity
+      - unitId
+      - ingredientId
+      properties:
+        quantity:
+          type: number
+          example: 0
+        unitId:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        ingredientId:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+    AgeModel:
+      type: object
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        name:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+    DishModel:
+      type: object
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        name:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+    IngredientModel:
+      type: object
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        name:
+          type: array
+          items:
+            $ref: '#/components/schemas/TranslationModel'
+    UnitContentModel:
+      type: object
+      required:
+      - language
+      - content
+      properties:
+        language:
+          type: string
+          example: 'vi'
+        content:
+          type: string
+          example: 'content in language'
+        description:
+          type: string
+          example: 'content in language'
+    UnitModel:
+      type: object
+      required:
+      - name
+      properties:
+        id:
+          type: string
+          example: '3f3a70b3-48db-4c3d-815f-e40088811cb1'
+        name:
+          type: array
+          items:
+            $ref: '#/components/schemas/UnitContentModel'
+    ConfigurationModel:
+      type: object
+      properties:
+        supportedLanguages:
+          type: array
+          items:
+            type: string
+            example: 'vi'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientModel'
+        ages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgeModel'
+        dishes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DishModel'
